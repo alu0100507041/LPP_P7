@@ -1,7 +1,11 @@
 require "gcd.rb"
 
 class Fraccion
+
+  #Incluir Modulo Comparable
   include Comparable
+  
+  #Contructor
   def  initialize (*args)
      if args.size == 2
        c = gcd(args[0],args[1])
@@ -11,36 +15,47 @@ class Fraccion
        @a = args[0]
        @b = 1
      end
-  end	
-  attr_accessor :a,:b
+  end
 
+  #Get y Set	
+  attr_accessor :a,:b
+  
+  #Formato de la fraccion
   def to_s
     "#{@a}/#{@b}"
   end
 
+  #Flotante
   def to_f 
     c = @a.to_f/@b.to_f
     c
   end
 
+  #Comparar fracciones
   def ==(other)
     return @a.eql?(other.a) && @b.eql?(other.b)
   end
 
+  #Valor absoluto
   def abs
     c = @a.to_f/@b.to_f
     return c.abs
   end
 
+  #Fracciones reciprocas
   def reciprocal
     f=Fraccion.new
     f.a=@b
     f.b = @a
     f
   end
+  
+  #Opuesto
   def -@
     Fraccion.new(-@a,@b)
   end
+  
+  #Minimizar fracciones
   def minimiza(x,y)
      d = gcd(x,y)
      x = x/d
@@ -48,6 +63,7 @@ class Fraccion
      return x,y
   end
 
+  #Suma de fracciones
   def +(other)
     f =Fraccion.new
     if (@b == other.b)
@@ -62,6 +78,8 @@ class Fraccion
      f.a,f.b = minimiza(f.a,f.b)
      return f
   end
+  
+  #Resta de fracciones
   def -(other)
     f =Fraccion.new
     if (@b == other.b)
@@ -76,6 +94,8 @@ class Fraccion
      f.a,f.b = minimiza(f.a,f.b)
      return f
   end
+
+  #Multiplicacion de fracciones
   def *(other)
     f =Fraccion.new
     f.a=@a * other.a
@@ -85,7 +105,8 @@ class Fraccion
      f.a,f.b = minimiza(f.a,f.b)
      return f
   end
- 
+
+  #Division de fracciones
   def /(other)
     f =Fraccion.new
     f.a=@a*other.b
@@ -94,6 +115,8 @@ class Fraccion
      f.a,f.b = minimiza(f.a,f.b)
      return f
   end
+
+  #Star Wars (comparable)
   def <=>(other)
      self.to_f <=> other.to_f
   end 
